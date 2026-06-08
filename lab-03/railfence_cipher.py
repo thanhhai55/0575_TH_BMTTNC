@@ -1,42 +1,39 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox
-from ui.caesar import Ui_MainWindow
+from PyQt5.QtWidgets import QApplication, QDialog, QMessageBox
+from ui.railfence import Ui_Dialog
 import requests
 
-class MyApp(QMainWindow):
+class RailFenceApp(QDialog):
     def __init__(self):
         super().__init__()
-        self.ui = Ui_MainWindow()
-        self.ui.setupUi(self)  
+        self.ui = Ui_Dialog()
+        self.ui.setupUi(self)
         self.ui.btn_encrypt.clicked.connect(self.call_api_encrypt)
         self.ui.btn_decrypt.clicked.connect(self.call_api_decrypt)
 
     def call_api_encrypt(self):
-        plain_text = self.ui.txt_plain_text.toPlainText().strip()
+        url = "http://127.0.0.1:5000/api/railfence/encrypt"
         
-        try:
-            key_value = self.ui.txt_key.text().strip()
-        except AttributeError:
-            key_value = self.ui.txt_key.toPlainText().strip()
+        plain_text = self.ui.txt_plain_text.toPlainText().strip()
+        key_value = self.ui.txt_key.toPlainText().strip()
 
         if not plain_text:
             QMessageBox.warning(self, "Lỗi nhập liệu", "Vui lòng nhập Plain text!")
             return
 
         if not key_value:
-            QMessageBox.warning(self, "Lỗi nhập liệu", "Vui lòng nhập Key!")
+            QMessageBox.warning(self, "Lỗi nhập liệu", "Vui lòng nhập Key hàng rào!")
             return
 
         if not key_value.isdigit():
-            QMessageBox.warning(self, "Lỗi nhập liệu", "Khóa của Caesar phải là một số nguyên!")
+            QMessageBox.warning(self, "Lỗi nhập liệu", "Khóa của Rail Fence phải là một số nguyên!")
             return
 
         key_int = int(key_value)
-        if key_int < 1 or key_int > 25:
-            QMessageBox.warning(self, "Lỗi nhập liệu", "Khóa của Caesar phải nằm trong khoảng từ 1 đến 25!")
+        if key_int < 2:
+            QMessageBox.warning(self, "Lỗi nhập liệu", "Số hàng rào (Key) phải lớn hơn hoặc bằng 2!")
             return
 
-        url = "http://127.0.0.1:5000/api/caesar/encrypt"
         payload = {
             "plain_text": plain_text,
             "key": key_int
@@ -50,7 +47,7 @@ class MyApp(QMainWindow):
             if response.status_code == 200:
                 try:
                     data = response.json()
-                    result = data.get("encrypted_message", "")
+                    result = data.get("encrypted_text", "")
                     self.ui.txt_cipher_text.setPlainText(result)
                     
                     msg = QMessageBox()
@@ -66,31 +63,28 @@ class MyApp(QMainWindow):
             print(f"Error while calling API: {e}")
 
     def call_api_decrypt(self):
-        cipher_text = self.ui.txt_cipher_text.toPlainText().strip()
+        url = "http://127.0.0.1:5000/api/railfence/decrypt"
         
-        try:
-            key_value = self.ui.txt_key.text().strip()
-        except AttributeError:
-            key_value = self.ui.txt_key.toPlainText().strip()
+        cipher_text = self.ui.txt_cipher_text.toPlainText().strip()
+        key_value = self.ui.txt_key.toPlainText().strip()
 
         if not cipher_text:
             QMessageBox.warning(self, "Lỗi nhập liệu", "Vui lòng nhập CipherText!")
             return
 
         if not key_value:
-            QMessageBox.warning(self, "Lỗi nhập liệu", "Vui lòng nhập Key!")
+            QMessageBox.warning(self, "Lỗi nhập liệu", "Vui lòng nhập Key hàng rào!")
             return
 
         if not key_value.isdigit():
-            QMessageBox.warning(self, "Lỗi nhập liệu", "Khóa của Caesar phải là một số nguyên!")
+            QMessageBox.warning(self, "Lỗi nhập liệu", "Khóa của Rail Fence phải là một số nguyên!")
             return
 
         key_int = int(key_value)
-        if key_int < 1 or key_int > 25:
-            QMessageBox.warning(self, "Lỗi nhập liệu", "Khóa của Caesar phải nằm trong khoảng từ 1 đến 25!")
+        if key_int < 2:
+            QMessageBox.warning(self, "Lỗi nhập liệu", "Số hàng rào (Key) phải lớn hơn hoặc bằng 2!")
             return
 
-        url = "http://127.0.0.1:5000/api/caesar/decrypt"
         payload = {
             "cipher_text": cipher_text,
             "key": key_int
@@ -104,7 +98,7 @@ class MyApp(QMainWindow):
             if response.status_code == 200:
                 try:
                     data = response.json()
-                    result = data.get("decrypted_message", "")
+                    result = data.get("decrypted_text", "")
                     self.ui.txt_plain_text.setPlainText(result)
                     
                     msg = QMessageBox()
@@ -121,6 +115,6 @@ class MyApp(QMainWindow):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    window = MyApp()
+    window = RailFenceApp()
     window.show()
     sys.exit(app.exec_())

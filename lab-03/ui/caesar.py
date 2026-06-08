@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'ui/caesar.ui'
+# Form implementation generated from reading ui file './ui/caesar.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.11
 #
@@ -9,8 +9,7 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-import os
-os.environ['QT_QPA_PLATFORM_PLUGIN_PATH'] = "platforms"
+
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -54,33 +53,33 @@ class Ui_MainWindow(object):
         font.setWeight(75)
         self.label_4.setFont(font)
         self.label_4.setObjectName("label_4")
-        self.pushButton = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton.setGeometry(QtCore.QRect(190, 470, 111, 41))
+        self.btn_encrypt = QtWidgets.QPushButton(self.centralwidget)
+        self.btn_encrypt.setGeometry(QtCore.QRect(190, 470, 111, 41))
         font = QtGui.QFont()
         font.setFamily("Times New Roman")
         font.setPointSize(14)
         font.setBold(True)
         font.setWeight(75)
-        self.pushButton.setFont(font)
-        self.pushButton.setObjectName("pushButton")
-        self.pushButton_2 = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton_2.setGeometry(QtCore.QRect(460, 470, 111, 41))
+        self.btn_encrypt.setFont(font)
+        self.btn_encrypt.setObjectName("btn_encrypt")
+        self.btn_decrypt = QtWidgets.QPushButton(self.centralwidget)
+        self.btn_decrypt.setGeometry(QtCore.QRect(460, 470, 111, 41))
         font = QtGui.QFont()
         font.setFamily("Times New Roman")
         font.setPointSize(14)
         font.setBold(True)
         font.setWeight(75)
-        self.pushButton_2.setFont(font)
-        self.pushButton_2.setObjectName("pushButton_2")
-        self.textEdit = QtWidgets.QTextEdit(self.centralwidget)
-        self.textEdit.setGeometry(QtCore.QRect(140, 130, 471, 91))
-        self.textEdit.setObjectName("textEdit")
-        self.textEdit_2 = QtWidgets.QTextEdit(self.centralwidget)
-        self.textEdit_2.setGeometry(QtCore.QRect(140, 270, 471, 41))
-        self.textEdit_2.setObjectName("textEdit_2")
-        self.textEdit_3 = QtWidgets.QTextEdit(self.centralwidget)
-        self.textEdit_3.setGeometry(QtCore.QRect(140, 360, 471, 91))
-        self.textEdit_3.setObjectName("textEdit_3")
+        self.btn_decrypt.setFont(font)
+        self.btn_decrypt.setObjectName("btn_decrypt")
+        self.txt_plain_text = QtWidgets.QTextEdit(self.centralwidget)
+        self.txt_plain_text.setGeometry(QtCore.QRect(140, 130, 471, 91))
+        self.txt_plain_text.setObjectName("txt_plain_text")
+        self.txt_key = QtWidgets.QTextEdit(self.centralwidget)
+        self.txt_key.setGeometry(QtCore.QRect(140, 270, 471, 41))
+        self.txt_key.setObjectName("txt_key")
+        self.txt_cipher_text = QtWidgets.QTextEdit(self.centralwidget)
+        self.txt_cipher_text.setGeometry(QtCore.QRect(140, 360, 471, 91))
+        self.txt_cipher_text.setObjectName("txt_cipher_text")
         self.label_5 = QtWidgets.QLabel(self.centralwidget)
         self.label_5.setGeometry(QtCore.QRect(510, 530, 281, 20))
         font = QtGui.QFont()
@@ -109,8 +108,8 @@ class Ui_MainWindow(object):
         self.label_2.setText(_translate("MainWindow", "Plain text"))
         self.label_3.setText(_translate("MainWindow", "Key"))
         self.label_4.setText(_translate("MainWindow", "CipherText"))
-        self.pushButton.setText(_translate("MainWindow", "Encrypt"))
-        self.pushButton_2.setText(_translate("MainWindow", "Decrypt"))
+        self.btn_encrypt.setText(_translate("MainWindow", "Encrypt"))
+        self.btn_decrypt.setText(_translate("MainWindow", "Decrypt"))
         self.label_5.setText(_translate("MainWindow", "Nguyen Thanh Hai/2380600575"))
 
 
